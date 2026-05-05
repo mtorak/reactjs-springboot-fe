@@ -1,21 +1,20 @@
-
-import React, { Component } from 'react';
-import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import React, {Component} from 'react';
+import {Button, ButtonGroup, Container, Table} from 'reactstrap';
 import AppNavbar from './AppNavbar';
-import { Link, withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 class ClientList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { clients: [] };
+        this.state = {clients: [], isLoading: true};
         this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
         fetch('/client')
             .then(response => response.json())
-            .then(data => this.setState({ clients: data }));
+            .then(data => this.setState({clients: data, isLoading: false}));
     }
 
     async remove(id) {
@@ -27,12 +26,12 @@ class ClientList extends Component {
             }
         }).then(() => {
             let updatedClients = [...this.state.clients].filter(i => i.id !== id);
-            this.setState({ clients: updatedClients });
+            this.setState({clients: updatedClients});
         });
     }
 
     render() {
-        const { clients, isLoading } = this.state;
+        const {clients, isLoading} = this.state;
 
         if (isLoading) {
             return <p>Loading...</p>;
@@ -40,7 +39,7 @@ class ClientList extends Component {
 
         const clientList = clients.map(client => {
             return <tr key={client.id}>
-                <td style={{ whiteSpace: 'nowrap' }}>{client.name}</td>
+                <td style={{whiteSpace: 'nowrap'}}>{client.name}</td>
                 <td>{client.email}</td>
                 <td>
                     <ButtonGroup>
@@ -53,28 +52,28 @@ class ClientList extends Component {
 
         return (
             <div>
-                <AppNavbar />
+                <AppNavbar/>
                 <Container fluid>
                     <div className="float-right">
-                        <Button color="success" tag={Link} to="/client/new">Add Client</Button>
+                        <Button color="info" tag={Link} to="/client/new">Add Client</Button>
                     </div>
                     <h3>Clients</h3>
                     <Table className="mt-4">
                         <thead>
-                            <tr>
-                                <th width="30%">Name</th>
-                                <th width="30%">Email</th>
-                                <th width="40%">Actions</th>
-                            </tr>
+                        <tr>
+                            <th width="30%">Name</th>
+                            <th width="30%">Email</th>
+                            <th width="40%">Actions</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {clientList}
+                        {clientList}
                         </tbody>
                     </Table>
                 </Container>
             </div>
         );
     }
-
 }
+
 export default withRouter(ClientList);

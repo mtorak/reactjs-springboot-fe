@@ -30,9 +30,9 @@ class ClientEdit extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        let item = { ...this.state.item };
+        let item = {...this.state.item};
         item[name] = value;
-        this.setState({ item });
+        this.setState({item: item});
     }
 
     async handleSubmit(event) {

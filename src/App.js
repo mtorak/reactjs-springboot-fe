@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ClientList from './ClientList';
 import ClientEdit from './ClientEdit';
-import ClientNew from './ClientNew';
 import Home from './Home';
 import './App.css';
 
@@ -11,13 +10,13 @@ class App extends Component {
     render() {
         return (
 
-            <Router>
+            <BrowserRouter>
                 <Switch>
                     <Route path='/' exact={true} component={Home} />
                     <Route path='/client' exact={true} component={ClientList} />
                     <Route path='/client/:id' component={ClientEdit} />
                 </Switch>
-            </Router>
+            </BrowserRouter>
 
             // <Router>
             //     <Switch>
